@@ -6,7 +6,8 @@ RUN apt-get update && apt-get upgrade -y
 
 RUN apt-get install -y php5-fpm
 
-RUN sed -i -e 's/;daemonize .*/daemonize = no/' /etc/php5/fpm/php-fpm.conf
+RUN sed -i -e 's/^;daemonize .*/daemonize = no/' /etc/php5/fpm/php-fpm.conf
+RUN sed -i -e 's/^listen \= .*/listen = 0.0.0.0:9000/' /etc/php5/fpm/pool.d/www.conf
 
 EXPOSE 9000
 
