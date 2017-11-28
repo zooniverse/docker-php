@@ -1,13 +1,16 @@
 FROM ubuntu:14.04
 
-ENV DEBIAN_FRONTEND noninteractive
-
-RUN apt-get update && apt-get upgrade -y
-
-RUN apt-get install -y php5-fpm php5-memcache php5-mysql php5-dev php5-curl
+RUN apt-get update && \
+        apt-get install -y \
+            php5-fpm \
+            php5-memcache \
+            php5-mysql \
+            php5-curl \
+        && rm -rf /var/lib/apt/lists/*
 
 RUN sed -i -e 's/^;daemonize .*/daemonize = no/' /etc/php5/fpm/php-fpm.conf
-RUN sed -i -e 's/^listen \= .*/listen = 0.0.0.0:9000/' /etc/php5/fpm/pool.d/www.conf
+RUN sed -i -e 's/^listen \= .*/listen = 0.0.0.0:9000/' /etc/php5/fpm/pool.d/www.conf && \
+    sed -i -e 's/^pm.max_children \= .*/pm.max_children = 20/' /etc/php5/fpm/pool.d/www.conf
 
 EXPOSE 9000
 
