@@ -8,7 +8,7 @@ RUN apt-get update && \
             php5-curl \
         && rm -rf /var/lib/apt/lists/*
 
-RUN ln -sf /var/log/php5-fpm.log /dev/stdout
+RUN ln -sf /dev/stdout /var/log/php5-fpm.log
 
 RUN sed -i -e 's/^;daemonize .*/daemonize = no/' /etc/php5/fpm/php-fpm.conf
 RUN sed -i -e 's/^listen \= .*/listen = 0.0.0.0:9000/' /etc/php5/fpm/pool.d/www.conf && \
