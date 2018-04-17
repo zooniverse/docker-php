@@ -8,6 +8,8 @@ RUN apt-get update && \
             php5-curl \
         && rm -rf /var/lib/apt/lists/*
 
+RUN ln -sf /var/log/php5-fpm.log /dev/stdout
+
 RUN sed -i -e 's/^;daemonize .*/daemonize = no/' /etc/php5/fpm/php-fpm.conf
 RUN sed -i -e 's/^listen \= .*/listen = 0.0.0.0:9000/' /etc/php5/fpm/pool.d/www.conf && \
     sed -i -e 's/^pm.max_children \= .*/pm.max_children = 20/' /etc/php5/fpm/pool.d/www.conf
